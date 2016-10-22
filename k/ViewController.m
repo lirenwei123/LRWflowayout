@@ -40,6 +40,11 @@
     cell.layer.cornerRadius =cell.bounds.size.height/8;
 //    cell.layer.masksToBounds =YES;
     cell.backgroundColor =[UIColor colorWithRed:arc4random_uniform(256)/255.0 green:arc4random_uniform(256)/255.0 blue:arc4random_uniform(256)/255.0 alpha:1];
+    CATransition *cat =[CATransition animation];
+    cat.duration =1;
+    cat.type =@"rippleEffect";
+    [cell.layer addAnimation:cat forKey:nil];
+    
     return cell;
 }
 

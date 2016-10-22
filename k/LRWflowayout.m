@@ -66,8 +66,7 @@
     for (int i=0; i<_allcount ; i++) {
         UICollectionViewLayoutAttributes *attr=[self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
         
-        
-        attr.transform3D =CATransform3DRotate(attr.transform3D, 0.14, 0.15, 0.16, 0.5);
+               attr.transform3D =CATransform3DRotate(attr.transform3D, 0.14, 0.15, 0.16, 0.5);
     
         [_attriarry addObject:attr];
         
