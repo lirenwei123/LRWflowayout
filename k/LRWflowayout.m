@@ -52,7 +52,13 @@
 
     
     heng =(self.motherSize.width-_edgeinsets.left+_miniteritemsspacing)/(self.myitemsize.width+_miniteritemsspacing);
+    if (!heng) {//整出不了就nil
+        heng=1;
+    }
     shu =(self.motherSize.height-_edgeinsets.top+_minlinespacing)/(self.myitemsize.height+_minlinespacing);
+    if (!shu) {
+        shu=1;
+    }
     
      MYLog(@"--%ld %ld",heng,shu);
 //    xoffset =(_motherSize.width-self.myitemsize.width*heng)/(heng+1);
@@ -86,32 +92,49 @@
         
         //算出line间隔
         
-        CGFloat offsety =(self.collectionView.frame.size.height-_edgeinsets.top-_edgeinsets.bottom-_myitemsize.height*shu)/(shu-1);
+        CGFloat offsety ;
+       
         
-        attr.frame =CGRectMake(_edgeinsets.left+_miniteritemsspacing*(indexPath.item/shu)+self.myitemsize.width*(indexPath.item/shu),_edgeinsets.top+offsety*(indexPath.item%shu) +self.myitemsize.height*(indexPath.item%shu), self.myitemsize.width, self.myitemsize.height);
-        MYLog(@"...%g  %g",attr.frame.origin.x,attr.frame.origin.y);
+        if (shu>1) {
+            offsety =(self.collectionView.frame.size.height-_edgeinsets.top-_edgeinsets.bottom-_myitemsize.height*shu)/(shu-1);
+            attr.frame =CGRectMake(_edgeinsets.left+_miniteritemsspacing*(indexPath.item/shu)+self.myitemsize.width*(indexPath.item/shu),_edgeinsets.top+offsety*(indexPath.item%shu) +self.myitemsize.height*(indexPath.item%shu), self.myitemsize.width, self.myitemsize.height);
+
+        }
+        else{
+            attr.frame =CGRectMake(_edgeinsets.left+_miniteritemsspacing*(indexPath.item/shu)+self.myitemsize.width*(indexPath.item/shu),(self.motherSize.height-_myitemsize.height)/2, self.myitemsize.width, self.myitemsize.height);
+
+        }
+//                MYLog(@"...%g  %g",attr.frame.origin.x,attr.frame.origin.y);
     }
     else{
         
         //算出item间隔
-        
-        CGFloat offsetx =(self.collectionView.frame.size.width-_edgeinsets.left-_edgeinsets.right-heng*_myitemsize.width)/(heng-1);
+        CGFloat offsetx;
+        if (heng>1) {
+            offsetx =(_motherSize.width-_edgeinsets.left-_edgeinsets.right-heng*_myitemsize.width)/(heng-1);
+             attr.frame =CGRectMake(_edgeinsets.left+offsetx*(indexPath.item%heng)+self.myitemsize.width*(indexPath.item%heng), _edgeinsets.top+_minlinespacing*(indexPath.item/heng)+self.myitemsize.height*(indexPath.item/heng), self.myitemsize.width, self.myitemsize.height);
+        }else{
+            attr.frame =CGRectMake((_motherSize.width-_myitemsize.width)/2 ,_edgeinsets.top+_minlinespacing*(indexPath.item/heng)+self.myitemsize.height*(indexPath.item/heng), self.myitemsize.width, self.myitemsize.height);
+        }
 
-        attr.frame =CGRectMake(_edgeinsets.left+offsetx*(indexPath.item%heng)+self.myitemsize.width*(indexPath.item%heng), _edgeinsets.top+_minlinespacing*(indexPath.item/heng)+self.myitemsize.height*(indexPath.item/heng), self.myitemsize.width, self.myitemsize.height);
+       
+
+       
     
     }
     return attr;
 }
 
 -(CGSize)collectionViewContentSize{
-    CGFloat wlong =[[self.attriarry lastObject] frame].origin.x+self.myitemsize.width+_edgeinsets.right;
-    CGFloat hlong =[[self.attriarry lastObject] frame].origin.y+self.myitemsize.height+_edgeinsets.bottom;
+    CGFloat wlong =MAX([[self.attriarry lastObject] frame].origin.x+self.myitemsize.width+_edgeinsets.right,_myitemsize.width+_edgeinsets.right);
+   
+    CGFloat hlong = MAX([[self.attriarry lastObject] frame].origin.y+self.myitemsize.height+_edgeinsets.bottom,_myitemsize.height+_edgeinsets.bottom);
     CGFloat w =self.collectionView.frame.size.width;
     CGFloat h =self.collectionView.frame.size.height;
     if (self.isHorizontal) {
-        return CGSizeMake(wlong, h);
+        return CGSizeMake(wlong, hlong);
     }else{
-        return CGSizeMake(w, hlong);
+        return CGSizeMake(wlong, hlong);
     }
     
 }

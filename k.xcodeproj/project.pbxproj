@@ -310,6 +310,7 @@
 				FB5108531DBA473B00F38B04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

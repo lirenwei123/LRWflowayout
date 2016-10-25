@@ -16,10 +16,11 @@
 
 @implementation ViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    LRWflowayout *flow=[[LRWflowayout alloc]initWithsize:CGSizeMake(78, 105) andHorV:YES andminlinespacing:33 andminiteritemsspacing:51 andedgeinsets:UIEdgeInsetsMake(15, 30, 15, 30)];
+    LRWflowayout *flow=[[LRWflowayout alloc]initWithsize:CGSizeMake(500, 800) andHorV:YES andminlinespacing:33 andminiteritemsspacing:51 andedgeinsets:UIEdgeInsetsMake(15, 30, 15, 30)];
     
     UICollectionView *co =[[UICollectionView alloc]initWithFrame:CGRectMake(0, 20, 414, 716) collectionViewLayout:flow];
     co.delegate =self;
